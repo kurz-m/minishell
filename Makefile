@@ -1,5 +1,5 @@
 NAME := minishell
-.DEFAULT_GOAL := all
+.DEFAULT_GOAL := multi
 CC := cc
 
 ################################################################################
@@ -96,3 +96,14 @@ re: fclean all
 -include $(OBJS:%.o=%.d)
 
 .PHONY: all fclean clean re
+
+# add any submodule here
+# check if submodule needs to be initialized
+submodules:
+	@if git submodule status | egrep -q '^[-+]' ; then \
+		echo "INFO: Need to reinitialize git submodules"; \
+		git submodule update --init; \
+	fi
+
+multi: submodules
+	$(MAKE) -j8 all

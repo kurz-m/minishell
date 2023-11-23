@@ -17,6 +17,7 @@ static void	termination_handler(int signum)
 	rl_set_prompt(RED_PROMPT);
 	rl_on_new_line();
 	rl_redisplay();
+	history_set_pos(history_length);
 	set_exit_status(128 + signum);
 }
 
